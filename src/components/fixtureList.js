@@ -3,16 +3,20 @@ import { Button, Row, Col, Panel } from 'react-bootstrap';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {predictResult} from '../actions/index';
+import {predictResult, getFixtures} from '../actions/index';
 
 const HOME_WIN = 1, AWAY_WIN = 2, DRAW = 0;
 
 class FixtureList extends Component {
+  componentWillMount() {
+    this.props.getFixtures();
+  }
+
   renderList() {
     return this.props.fixtures.map((fixture) => {
-      return <div key={fixture.id}>
+      return <div key={fixture.homeTeamName}>
         <Row>
-          <Col xs={4} xsOffset={2}>{`${fixture.home} - ${fixture.away}`}</Col>
+          <Col xs={6} xsOffset={1}>{`${fixture.homeTeamName} - ${fixture.awayTeamName}`}</Col>
           <Col xs={1}>
             <Button
               bsStyle={fixture.prediction === HOME_WIN ? 'primary' : 'default'}
@@ -47,7 +51,7 @@ function mapStateToProps({fixtures}) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({predictResult: predictResult}, dispatch);
+  return bindActionCreators({predictResult: predictResult, getFixtures: getFixtures}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FixtureList)

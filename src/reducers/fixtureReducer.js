@@ -8,14 +8,11 @@ export default function(state, action) {
     })
   }
 
-  return [{
-    id: 1,
-    home: 'Arsenal',
-    away: 'Tottenham'
-  },
-  {
-    id: 2,
-    home: 'Burnley',
-    away: 'Stoke City'
-  }];
+  if (action.type === 'DISPLAY_FIXTURES') {
+    return action.payload.map(({homeTeamName, awayTeamName}) => {
+      return {homeTeamName, awayTeamName};
+    });
+  }
+
+  return [];
 }
