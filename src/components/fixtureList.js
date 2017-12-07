@@ -2,21 +2,31 @@ import React, {Component} from 'react';
 import { Button, Row, Col, Panel } from 'react-bootstrap';
 
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {predictResult} from '../actions/index';
+
+const HOME_WIN = 1, AWAY_WIN = 2, DRAW = 0;
 
 class FixtureList extends Component {
   renderList() {
     return this.props.fixtures.map((fixture) => {
-      return <div>
+      return <div key={fixture.id}>
         <Row>
           <Col xs={4} xsOffset={2}>{`${fixture.home} - ${fixture.away}`}</Col>
           <Col xs={1}>
-            <Button bsStyle={fixture.prediction === 1 && 'Primary'} >1</Button>
+            <Button
+              bsStyle={fixture.prediction === HOME_WIN ? 'primary' : 'default'}
+              onClick={() => this.props.predictResult({fixture, prediction: HOME_WIN})}>{HOME_WIN}</Button>
           </Col>
           <Col xs={1}>
-            <Button bsStyle={fixture.prediction === 0 && 'Primary'}>x</Button>
+            <Button
+              bsStyle={fixture.prediction === DRAW ? 'primary' : 'default'}
+              onClick={() => this.props.predictResult({fixture, prediction: DRAW})}>x</Button>
           </Col>
           <Col xs={1}>
-            <Button bsStyle={fixture.prediction === 2 && 'Primary'}>2</Button>
+            <Button
+              bsStyle={fixture.prediction === AWAY_WIN ? 'primary' : 'default'}
+              onClick={() => this.props.predictResult({fixture, prediction: AWAY_WIN})}>{AWAY_WIN}</Button>
           </Col>
         </Row>
         <br/>
@@ -32,4 +42,8 @@ function mapStateToProps({fixtures}) {
   return {fixtures};
 }
 
-export default connect(mapStateToProps)(FixtureList)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({predictResult: predictResult}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FixtureList)
