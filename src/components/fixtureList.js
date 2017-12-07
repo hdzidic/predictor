@@ -34,7 +34,11 @@ class FixtureList extends Component {
     })
   }
   render() {
-    return <Panel>{this.renderList()}</Panel>
+    return <Row>
+      <Col xs={6} xsOffset={3}>
+        <Panel bsStyle='primary' header={'Premier League Fixtures'}>{this.renderList()}</Panel>
+      </Col>
+    </Row>
   }
 }
 
