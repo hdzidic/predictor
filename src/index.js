@@ -13,6 +13,7 @@ import thunk from 'redux-thunk';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import FixtureList from './components/fixtureList';
+import NavHeader from './components/navbar';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
@@ -20,6 +21,7 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <BrowserRouter>
       <div>
+        <NavHeader/>
         <Switch>
           <Route path='/fixtures' component={FixtureList}/>
           <Route path='/' component={App}/>

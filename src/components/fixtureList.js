@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {predictResult, getFixtures} from '../actions/index';
 import {Link} from 'react-router-dom';
+import './fixtureList.css';
 
 const HOME_WIN = 1, AWAY_WIN = 2, DRAW = 0;
 
@@ -17,7 +18,7 @@ class FixtureList extends Component {
     return this.props.fixtures.map((fixture) => {
       return <div key={fixture.homeTeamName}>
         <Row>
-          <Col sm={6} smOffset={1} xs={8}>{`${fixture.homeTeamName} - ${fixture.awayTeamName}`}</Col>
+          <Col sm={7} smOffset={1} xs={8}>{`${fixture.homeTeamName} - ${fixture.awayTeamName}`}</Col>
           <Col xs={1}>
             <Button
               bsStyle={fixture.prediction === HOME_WIN ? 'primary' : 'default'}
