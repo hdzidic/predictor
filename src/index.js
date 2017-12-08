@@ -10,12 +10,22 @@ import {createStore, applyMiddleware} from 'redux';
 import reducers from './reducers';
 import thunk from 'redux-thunk';
 
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+
+import FixtureList from './components/fixtureList';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
+    <BrowserRouter>
+      <div>
+        <Switch>
+          <Route path='/fixtures' component={FixtureList}/>
+          <Route path='/' component={App}/>
+        </Switch>
+      </div>
+    </BrowserRouter>
   </Provider>, document.getElementById('root'));
 
 registerServiceWorker();

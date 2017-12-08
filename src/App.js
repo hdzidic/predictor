@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
-import FixtureList from './components/fixtureList';
+import {Link} from 'react-router-dom';
 
 class App extends Component {
   render() {
@@ -13,7 +12,10 @@ class App extends Component {
           <h1 className="App-title">Welcome to Predictor</h1>
         </header>
         <br/>
-        <FixtureList/>
+        <br/>
+        <div>
+          <Link className='btn btn-primary' to='/fixtures'>Enter Predictions</Link>
+        </div>
       </div>
     );
   }
