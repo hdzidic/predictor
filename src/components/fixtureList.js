@@ -18,18 +18,18 @@ class FixtureList extends Component {
     return this.props.fixtures.map((fixture) => {
       return <div key={fixture.homeTeamName}>
         <Row>
-          <Col sm={7} smOffset={1} xs={8}>{`${fixture.homeTeamName} - ${fixture.awayTeamName}`}</Col>
-          <Col xs={1}>
+          <Col sm={7} smOffset={1} xs={6}>{`${fixture.homeTeamName} - ${fixture.awayTeamName}`}</Col>
+          <Col xs={2} sm={1}>
             <Button
               bsStyle={fixture.prediction === HOME_WIN ? 'primary' : 'default'}
               onClick={() => this.props.predictResult({fixture, prediction: HOME_WIN})}>{HOME_WIN}</Button>
           </Col>
-          <Col xs={1}>
+          <Col xs={2} sm={1}>
             <Button
               bsStyle={fixture.prediction === DRAW ? 'primary' : 'default'}
               onClick={() => this.props.predictResult({fixture, prediction: DRAW})}>x</Button>
           </Col>
-          <Col xs={1}>
+          <Col xs={2} sm={1}>
             <Button
               bsStyle={fixture.prediction === AWAY_WIN ? 'primary' : 'default'}
               onClick={() => this.props.predictResult({fixture, prediction: AWAY_WIN})}>{AWAY_WIN}</Button>
