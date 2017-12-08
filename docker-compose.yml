@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+    reverseproxy:
+        image: hara/predictor-nginx
+        ports:
+            - 80:80
+        restart: always
+
+    server:
+        image: hara/predictor-server
+        ports:
+            - 8099:8099
+        restart: always
