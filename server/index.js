@@ -3,7 +3,7 @@ const path = require('path');
 const axios = require('axios');
 
 const app = express();
-const URL = 'http://api.football-data.org/v1/competitions/445/fixtures?matchday=18';
+const URL = 'http://api.football-data.org/v1/competitions/445/fixtures?matchday=16';
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));
