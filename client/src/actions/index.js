@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = 'http://api.football-data.org/v1/competitions/445/fixtures?matchday=16';
+const URL = '/api/fixtures';
 
 export function predictResult(fixture) {
   return {
@@ -24,13 +24,7 @@ export function showError(error) {
 
 export function getFixtures() {
   return function (dispatch) {
-    return axios({
-      url: URL,
-      method: 'get',
-      headers: {
-        'X-Auth-Token': '1d47b8ba06f7421dadc29a4d4bac5d93'
-      }
-    }).then(
+    return axios.get(URL).then(
       res => dispatch(displayFixtures(res)),
       error => dispatch(showError(error))
     );

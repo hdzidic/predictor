@@ -1,0 +1,16 @@
+{
+  "name": "predictor-server",
+  "version": "1.0.0",
+  "description": "node express API server for predictor app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "express": "^4.16.2",
+    "got": "^8.0.1"
+  }
+}
