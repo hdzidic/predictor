@@ -1,6 +1,7 @@
 {
   "name": "predictor",
   "version": "0.1.0",
+  "homepage" : "http://predictor.netlify.com",
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",

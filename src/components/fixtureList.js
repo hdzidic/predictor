@@ -16,7 +16,7 @@ class FixtureList extends Component {
     return this.props.fixtures.map((fixture) => {
       return <div key={fixture.homeTeamName}>
         <Row>
-          <Col xs={6} xsOffset={1}>{`${fixture.homeTeamName} - ${fixture.awayTeamName}`}</Col>
+          <Col sm={6} smOffset={1} xs={8}>{`${fixture.homeTeamName} - ${fixture.awayTeamName}`}</Col>
           <Col xs={1}>
             <Button
               bsStyle={fixture.prediction === HOME_WIN ? 'primary' : 'default'}
@@ -39,7 +39,7 @@ class FixtureList extends Component {
   }
   render() {
     return <Row>
-      <Col xs={6} xsOffset={3}>
+      <Col lg={6} lgOffset={3} md={8} mdOffset={2} sm={10} smOffset={1} xs={12}>
         <Panel bsStyle='primary' header={'Premier League Fixtures'}>{this.renderList()}</Panel>
       </Col>
     </Row>
