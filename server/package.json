@@ -4,12 +4,20 @@
   "description": "node express API server for predictor app",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "development": "nodemon --inspect index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
-    "express": "^4.16.2"
+    "babel-register": "^6.26.0",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.6.1"
   }
 }
