@@ -4,7 +4,8 @@ import dotenv from 'dotenv';
 // Load local Env configuration (ENV variables). To be used to configure Dev, Staging, Production
 dotenv.config({ path: '.env'});
 
-const appRootPath = process.env.ROOTPATH || path.normalize(path.join(__dirname, '/../../../'));
+const serverRootPath = process.env.ROOTPATH || path.normalize(path.join(__dirname, '/..'));
+const appRootPath = process.env.ROOTPATH || path.normalize(path.join(__dirname, '/../../'));
 
 // Configure default runtime environment.
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -27,6 +28,7 @@ var config = {
   fixturesAPIKey: process.env.FIXTURES_API_KEY,
 
   static: process.env.CLIENT_STATIC || appRootPath + '/client/build/',
+  root: serverRootPath
 };
 
 export default config;
