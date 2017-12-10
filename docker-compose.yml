@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+    client:
+        build: ./client/
+        restart: always
+        volumes:
+            - ./server/:/server/
+            - ./client/:/client/
+    reverseproxy:
+        build: ./nginx/
+        ports:
+            - 80:80
+        restart: always
+        volumes:
+            - ./server/:/server/
+            - ./client/:/client/
+    server:
+        build: ./server/
+        ports:
+            - 8099:8099
+        restart: always
+        volumes:
+            - ./server/:/server/
+            - ./client/:/client/
