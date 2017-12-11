@@ -1,4 +1,4 @@
-import {Router} from 'express';
-import * as controller from './controller';
+import { Router } from 'express';
+import controller from './controller';
 
-export default Router({strict: true}).get('/', controller.getFixtures);
+export default Router({ strict: true }).get('/', controller);

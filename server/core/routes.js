@@ -1,10 +1,10 @@
 import express from 'express';
 
 import config from '../lib/config';
-import fixtureRoutes from '../api/fixtures/routes'
+import fixtureRoutes from '../api/fixtures/routes';
 
 const router = express.Router({
-  strict: true
+  strict: true,
 });
 
 router.use(express.static(config.static));

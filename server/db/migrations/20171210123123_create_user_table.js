@@ -1,5 +1,5 @@
-exports.up = function (knex) {
-  return knex.schema.createTable('user', function (t) {
+export function up(knex) {
+  return knex.schema.createTable('user', (t) => {
     t.increments().primary();
     t.string('fullname').notNull();
     t.string('username').unique().notNull();
@@ -8,9 +8,9 @@ exports.up = function (knex) {
     t.boolean('isConfirmed');
     t.string('imagePath');
     t.timestamps();
-  })
+  });
 }
 
-exports.down = function (knex) {
-  return knex.schema.dropTableIfExists('user')
+export function down(knex) {
+  return knex.schema.dropTableIfExists('user');
 }

@@ -1,4 +1,4 @@
-require("babel-core/register");
+require('babel-core/register');
 
 const webserver = require('./core/webserver');
 

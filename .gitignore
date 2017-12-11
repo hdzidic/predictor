@@ -16,7 +16,6 @@
 .env.test.local
 .env.production.local
 .netlify
-server/.babelrc
 server/.env
 
 npm-debug.log*

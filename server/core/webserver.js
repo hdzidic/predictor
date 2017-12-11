@@ -3,21 +3,22 @@ import express from 'express';
 
 import routes from './routes';
 import config from '../lib/config';
+import logger from '../lib/logger';
 
 export function app(instance = null) {
-  instance = instance || express();
+  const appInstance = instance || express();
 
-  instance
-    .use(bodyParser.json({limit: '5mb'}))
+  appInstance
+    .use(bodyParser.json({ limit: '5mb' }))
     .use(bodyParser.urlencoded({ extended: true, limit: '5mb' }))
     .use('/', routes);
 
-  return instance;
+  return appInstance;
 }
 
 export function serve() {
   app().listen(config.port);
 
-  console.log('Server started listening on port', config.port);
-  console.log('Runtime environment:', process.env.NODE_ENV);
+  logger.info('Server started listening on port %s', config.port);
+  logger.info('Runtime environment: %s', config.environment);
 }

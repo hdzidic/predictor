@@ -1,5 +1,6 @@
-import config from '../lib/config';
 import knex from 'knex';
+import config from '../lib/config';
+import logger from '../lib/logger';
 
 let knexConnection;
 
@@ -10,22 +11,21 @@ export function connect() {
       user: config.databaseUser,
       password: config.databasePassword,
       host: config.databaseHost,
-      database: config.databaseName
-    }
+      database: config.databaseName,
+    },
   });
 
-  console.log('Knex connected to DB at %s:%s', config.databaseHost, config.databasePort);
+  logger.info('Knex connected to DB at %s:%s', config.databaseHost, config.databasePort);
 
   module.exports.knex = knexConnection;
 }
 
 export function migrate() {
-  console.log('root', config.root);
   if (knexConnection) {
     knexConnection.migrate.latest({
       tableName: 'knex_migrations',
-      directory: config.root + '/db/migrations'
+      directory: `${config.root}/db/migrations`,
     });
-    console.log('Migrated to latest DB version successfully');
+    logger.info('Migrated to latest DB version successfully');
   }
 }
