@@ -1,4 +1,5 @@
 import knex from 'knex';
+import Q from 'q';
 import config from '../lib/config';
 import logger from '../lib/logger';
 
@@ -28,4 +29,10 @@ export function migrate() {
     });
     logger.info('Migrated to latest DB version successfully');
   }
+}
+
+export function createDatabaseAndConnect() {
+  const promises = [connect(), migrate()];
+
+  return Q.all(promises);
 }

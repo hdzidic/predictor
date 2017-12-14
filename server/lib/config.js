@@ -30,6 +30,7 @@ const config = {
   static: process.env.CLIENT_STATIC || `${appRootPath}/client/build/`,
   root: serverRootPath,
   environment: process.env.ENVIRONMENT || 'DEV',
+  sessionSecretKey: process.env.SECRET_KEY,
 };
 
 export default config;
