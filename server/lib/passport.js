@@ -45,7 +45,9 @@ function setPassport() {
           return done(null, user);
         }
       })
-      .catch(err => done(null, false, { message: err.message }))
+      .catch((err) => {
+        done(null, false, { message: err.message });
+      })
       .done();
   }));
 
@@ -67,10 +69,11 @@ function setPassport() {
         fullname: req.body.fullname,
       }))
       .then(insertedUser => done(null, insertedUser))
-      .catch(err => done(null, false, { message: err.message }))
+      .catch((err) => {
+        done(null, false, { message: err.message });
+      })
       .done();
   }));
-
   return passport;
 }
 

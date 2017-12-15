@@ -4,7 +4,7 @@ export default {
   signUp: {
     body: Joi.object().required().keys({
       username: Joi.string().email().required(),
-      fullname: Joi.string().optional().allow(''),
+      fullname: Joi.string().required(),
       password: Joi.string().required(),
     }),
   },

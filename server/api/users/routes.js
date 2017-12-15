@@ -1,12 +1,12 @@
 import express from 'express';
 
-import passport from '../../lib/passport';
+import * as users from './users';
 
 const router = express.Router({
   strict: true,
 });
 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-}));
+router.route('/login').post(users.login);
+router.route('/signup').post(users.signUp);
+
+export default router;
