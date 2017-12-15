@@ -2,14 +2,15 @@ import passport from 'passport';
 import { Strategy } from 'passport-local';
 import bcrypt from 'bcrypt';
 import uuid from 'uuid/v4';
+import Q from 'q';
 
 import getUserById from '../api/users/db/getUserById';
 import getUserByUsername from '../api/users/db/getUserByUsername';
 import storeUser from '../api/users/db/storeUser';
 
 function setPassport() {
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
+  passport.serializeUser((userId, done) => {
+    done(null, userId);
   });
 
   passport.deserializeUser((id, done) => {
@@ -27,22 +28,25 @@ function setPassport() {
   }, (req, username, password, done) => {
     getUserByUsername(username)
       .then((user) => {
-        if (!user) {
+        if (!user || !user[0]) {
           throw new Error('User not found');
-        } else if (!user.isConfirmed) {
-          throw new Error('Check your e-mail to complete the registration process.');
         } else {
-          return user;
+          return user[0];
         }
       })
-      .then(userObj => bcrypt.compare(password, userObj.password))
+      .then((userObj) => {
+        const promises = [bcrypt.compare(password, userObj.password)];
+        promises.push(userObj);
+
+        return Q.all(promises);
+      })
       // if password is valid, login user and return user object.
       .then((res) => {
         if (res[0] === false) {
           throw new Error('Incorrect password');
         } else {
           const user = res[1];
-          return done(null, user);
+          return done(null, user.id);
         }
       })
       .catch((err) => {
@@ -57,7 +61,7 @@ function setPassport() {
     const userConfirmationToken = uuid();
     getUserByUsername(username)
       .then((user) => {
-        if (user) {
+        if (user && user[0]) {
           throw new Error('Username is already taken');
         }
         return bcrypt.hash(password, 10);
@@ -67,8 +71,11 @@ function setPassport() {
         password: hashedPass,
         token: userConfirmationToken,
         fullname: req.body.fullname,
+        created_at: new Date(),
       }))
-      .then(insertedUser => done(null, insertedUser))
+      .then((insertedUser) => {
+        done(null, insertedUser[0]);
+      })
       .catch((err) => {
         done(null, false, { message: err.message });
       })

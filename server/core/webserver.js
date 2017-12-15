@@ -7,9 +7,9 @@ import { buildSchema } from 'graphql';
 import session from 'express-session';
 import sessionStore from 'connect-session-knex';
 import uuid from 'uuid/v4';
+import expressValidator from 'express-validator';
 
 import passportInstance from '../lib/passport';
-
 import { knex } from '../db/database';
 import routes from './routes';
 import config from '../lib/config';
@@ -55,6 +55,7 @@ export function app(instance = null) {
   appInstance
     .use(bodyParser.json({ limit: '5mb' }))
     .use(bodyParser.urlencoded({ extended: true, limit: '5mb' }))
+    .use(expressValidator())
     .use(session(sess))
     .use(passportInstance.initialize())
     .use(passportInstance.session())

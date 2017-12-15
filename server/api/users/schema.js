@@ -8,7 +8,7 @@ export default {
       password: Joi.string().required(),
     }),
   },
-  signIn: {
+  login: {
     body: Joi.object().required().keys({
       username: Joi.string().email().required(),
       password: Joi.string().required(),

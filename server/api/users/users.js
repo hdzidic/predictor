@@ -10,7 +10,7 @@ function authenticate(req, res, next, func) {
         if (error) {
           return next(error);
         }
-        return res.send(user);
+        return res.status(200).send('OK');
       });
     }
     if (info && info.message) {
