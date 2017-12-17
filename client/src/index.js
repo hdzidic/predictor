@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
-import App from './App';
+import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
 import {Provider} from 'react-redux';
@@ -12,7 +12,8 @@ import thunk from 'redux-thunk';
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-import FixtureList from './components/fixtureList';
+import FixtureList from './containers/fixtureList';
+import SignUp from './containers/signUp';
 import NavHeader from './components/navbar';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -24,6 +25,7 @@ ReactDOM.render(
         <NavHeader/>
         <Switch>
           <Route path='/fixtures' component={FixtureList}/>
+          <Route path='/signup' component={SignUp}/>
           <Route path='/' component={App}/>
         </Switch>
       </div>

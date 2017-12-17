@@ -22,14 +22,14 @@ const config = {
   databaseMigrationsAutorun: process.env.DATABASE_MIGRATIONS_AUTORUN || true,
   databaseUser: process.env.DATABASE_USER || '',
   databasePassword: process.env.DATABASE_PASSWORD || '',
-  databaseName: process.env.DATABASE_NAME || 'predictor-local',
+  databaseName: process.env.DATABASE_NAME || 'predictor_local',
 
   fixturesAPIUrl: process.env.FIXTURES_API_URL,
   fixturesAPIKey: process.env.FIXTURES_API_KEY,
 
   static: process.env.CLIENT_STATIC || `${appRootPath}/client/build/`,
   root: serverRootPath,
-  environment: process.env.ENVIRONMENT || 'DEV',
+  environment: process.env.NODE_ENV,
   sessionSecretKey: process.env.SECRET_KEY,
 };
 

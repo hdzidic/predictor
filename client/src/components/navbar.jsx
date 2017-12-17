@@ -15,6 +15,16 @@ const NavHeader = () => {
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav pullRight>
+        <LinkContainer to='/signup'>
+          <NavItem eventKey={3}>Sign up</NavItem>
+        </LinkContainer>
+      </Nav>
+      <Nav pullRight>
+        <LinkContainer to='/signin'>
+          <NavItem eventKey={2}>Sign in</NavItem>
+        </LinkContainer>
+      </Nav>
+      <Nav pullRight>
         <LinkContainer to='/fixtures'>
           <NavItem eventKey={1}>Predictions</NavItem>
         </LinkContainer>
