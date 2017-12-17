@@ -1,16 +1,35 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import { Button, Row, Col, Panel, FormControl } from 'react-bootstrap';
+import { Button, Row, Col, Panel } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import {
+  composeValidators,
+  combineValidators,
+  isRequired,
+  matchesField
+} from 'revalidate'
+
+import isValidEmail from '../common/validation';
+import ReduxFormControl from '../common/ReduxFormControl.jsx';
 
 import './signUp.css'
 
-const ReduxFormControl = ({input, meta, ...props}) => {
-    return <FormControl {...props} {...input} />
-};
+const validate = combineValidators({
+  email: composeValidators(
+    isRequired('Email'),
+    isValidEmail('Email')
+  )(),
+  fullName: isRequired('Full name'),
+  password: isRequired('Password'),
+  confirmPassword: composeValidators(
+    isRequired('Confirm password'),
+    matchesField('password')({
+      message: 'Passwords do not match',
+    }))()
+});
 
 let SignUpForm = props => {
-  const { handleSubmit } = props
+  const { handleSubmit, submitting } = props
   return <form onSubmit={handleSubmit}>
     <Row>
       <Col lg={6} lgOffset={3} md={8} mdOffset={2} sm={10} smOffset={1} xs={12}>
@@ -60,7 +79,7 @@ let SignUpForm = props => {
         <Link className='btn btn-danger btn-block' to='/'>Cancel</Link>
       </Col>
       <Col lg={2} lgOffset={2} md={3} mdOffset={2} sm={4} smOffset={2} xs={5} xsOffset={2}>
-        <Button type='submit' className='btn btn-primary btn-block'>Save</Button>
+        <Button type='submit' disabled={submitting} className='btn btn-primary btn-block'>Save</Button>
       </Col>
     </Row>
   </form>
@@ -68,5 +87,6 @@ let SignUpForm = props => {
 
 export default reduxForm({
   // a unique name for the form
-  form: 'signUp'
+  form: 'signUp',
+  validate
 })(SignUpForm);
