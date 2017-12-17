@@ -1,32 +1,12 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import { Button, Row, Col, Panel } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {
-  composeValidators,
-  combineValidators,
-  isRequired,
-  matchesField
-} from 'revalidate'
 
-import isValidEmail from '../common/validation';
-import ReduxFormControl from '../common/ReduxFormControl.jsx';
+import validate from './validateSignUp';
+import FormControl from '../common/formControl';
 
-import './signUp.css'
-
-const validate = combineValidators({
-  email: composeValidators(
-    isRequired('Email'),
-    isValidEmail('Email')
-  )(),
-  fullName: isRequired('Full name'),
-  password: isRequired('Password'),
-  confirmPassword: composeValidators(
-    isRequired('Confirm password'),
-    matchesField('password')({
-      message: 'Passwords do not match',
-    }))()
-});
+import './signUp.css';
 
 let SignUpForm = props => {
   const { handleSubmit, submitting } = props
@@ -35,41 +15,13 @@ let SignUpForm = props => {
       <Col lg={6} lgOffset={3} md={8} mdOffset={2} sm={10} smOffset={1} xs={12}>
         <Panel bsStyle='primary' header={'Create a Predictor account'}>
           <br/>
-          <Row>
-            <Col className='signup__label' xs={3}>
-              Email
-            </Col>
-            <Col xs={9}>
-              <Field name='email' type='email' component={ReduxFormControl}/>
-            </Col>
-          </Row>
+          <FormControl name='email' type='email' label='Email'/>
           <br/>
-          <Row>
-            <Col className='signup__label' xs={3}>
-              Full name
-            </Col>
-            <Col xs={9}>
-              <Field name='fullName' component={ReduxFormControl} type='text' />
-            </Col>
-          </Row>
+          <FormControl name='fullName' type='text' label='Full name'/>
           <br/>
-          <Row>
-            <Col className='signup__label' xs={3}>
-              Password
-            </Col>
-            <Col xs={9}>
-              <Field name='password' component={ReduxFormControl} type='password' />
-            </Col>
-          </Row>
+          <FormControl name='password' type='password' label='Password'/>
           <br/>
-          <Row>
-            <Col className='signup__label' xs={3}>
-              Confirm Password
-            </Col>
-            <Col xs={9}>
-              <Field name='confirmPassword' component={ReduxFormControl} type='password' />
-            </Col>
-          </Row>
+          <FormControl name='confirmPassword' type='password' label='Confirm Password'/>
           <br/>
         </Panel>
       </Col>
