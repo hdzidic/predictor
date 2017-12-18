@@ -6,6 +6,7 @@ export default {
       username: Joi.string().email().required(),
       fullname: Joi.string().required(),
       password: Joi.string().required(),
+      confirmPassword: Joi.string().optional().allow(''),
     }),
   },
   login: {

@@ -1,5 +1,4 @@
 import axios from 'axios';
-const URL = '/api/fixtures';
 
 export function predictResult(fixture) {
   return {
@@ -24,9 +23,27 @@ export function showError(error) {
 
 export function getFixtures() {
   return function (dispatch) {
-    return axios.get(URL).then(
+    return axios.get('/api/fixtures').then(
       res => dispatch(displayFixtures(res)),
       error => dispatch(showError(error))
     );
   };
+}
+
+export function signUp(history, values) {
+  return function (dispatch) {
+    return axios.post('/api/users/signup', values)
+    .then(() => {
+        dispatch(showSignupConfirmation());
+        history.push('/signupconfirmation');
+      })
+    .catch(error => dispatch(showError(error)))
+  };
+}
+
+export function showSignupConfirmation() {
+  return {
+    type: 'SHOW_SIGNUP_CONFIRMATION',
+    payload: null
+  }
 }

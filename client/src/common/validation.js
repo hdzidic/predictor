@@ -1,4 +1,4 @@
-import { createValidator } from 'revalidate'
+import { createValidator } from 'revalidate';
 
 export default createValidator(
   message => value => {

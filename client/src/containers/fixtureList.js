@@ -39,6 +39,7 @@ class FixtureList extends Component {
       </div>;
     })
   }
+
   render() {
     return <div>
       <Row>
@@ -63,7 +64,7 @@ function mapStateToProps({fixtures}) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({predictResult: predictResult, getFixtures: getFixtures}, dispatch);
+  return bindActionCreators({predictResult, getFixtures}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FixtureList)

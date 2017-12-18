@@ -7,11 +7,11 @@ import {
 import isValidEmail from '../common/validation';
 
 export default combineValidators({
-  email: composeValidators(
+  username: composeValidators(
     isRequired('Email'),
     isValidEmail('Email')
   )(),
-  fullName: isRequired('Full name'),
+  fullname: isRequired('Full name'),
   password: isRequired('Password'),
   confirmPassword: composeValidators(
     isRequired('Confirm password'),
