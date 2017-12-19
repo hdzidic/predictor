@@ -1,9 +1,16 @@
-export default function showError(state, action) {
+export default function (state, action) {
   if (action.type === 'SHOW_ERROR') {
-    return {
-      error: true
-    }
+    return Object.assign({}, state, {
+      error: action.payload
+    });
   }
 
-  return state || {};
+  if (action.type === 'SIGNIN_CONFIRMATION' || action.type === 'SIGNUP_CONFIRMATION') {
+    return Object.assign({}, state, {
+      error: false,
+      fullname: action.payload.fullname
+    });
+  }
+
+  return state || null;
 }

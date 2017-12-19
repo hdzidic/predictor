@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import passport from '../../lib/passport';
 
 function authenticate(req, res, next, func) {
@@ -10,7 +11,7 @@ function authenticate(req, res, next, func) {
         if (error) {
           return next(error);
         }
-        return res.status(200).send('OK');
+        return res.status(200).send(_.pick(user, ['id', 'username', 'fullname']));
       });
     }
     if (info && info.message) {

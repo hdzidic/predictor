@@ -6,7 +6,7 @@ import {
 } from 'revalidate';
 import isValidEmail from '../common/validation';
 
-export default combineValidators({
+const validateSignUp = combineValidators({
   username: composeValidators(
     isRequired('Email'),
     isValidEmail('Email')
@@ -19,3 +19,13 @@ export default combineValidators({
       message: 'Passwords do not match',
     }))()
 });
+
+const validateSignIn = combineValidators({
+  username: composeValidators(
+    isRequired('Email'),
+    isValidEmail('Email')
+  )(),
+  password: isRequired('Password')
+});
+
+export {validateSignIn, validateSignUp};

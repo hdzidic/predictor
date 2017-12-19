@@ -3,20 +3,24 @@ import { Strategy } from 'passport-local';
 import bcrypt from 'bcrypt';
 import uuid from 'uuid/v4';
 import Q from 'q';
+import owasp from 'owasp-password-strength-test';
 
+import config from './config';
 import getUserById from '../api/users/db/getUserById';
 import getUserByUsername from '../api/users/db/getUserByUsername';
 import storeUser from '../api/users/db/storeUser';
 
+owasp.config(config.security.owasp);
+
 function setPassport() {
-  passport.serializeUser((userId, done) => {
-    done(null, userId);
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
     getUserById(id)
       .then((user) => {
-        done(null, user);
+        done(null, user[0]);
       })
       .catch((err) => {
         done(err, null);
@@ -46,11 +50,13 @@ function setPassport() {
           throw new Error('Incorrect password');
         } else {
           const user = res[1];
-          return done(null, user.id);
+          done(null, user);
+          return null;
         }
       })
       .catch((err) => {
         done(null, false, { message: err.message });
+        return null;
       })
       .done();
   }));
@@ -64,20 +70,32 @@ function setPassport() {
         if (user && user[0]) {
           throw new Error('Username is already taken');
         }
+        const result = owasp.test(req.body.password);
+        if (!result.strong) {
+          throw new Error(result.errors);
+        }
         return bcrypt.hash(password, 10);
       })
-      .then(hashedPass => storeUser({
-        username,
-        password: hashedPass,
-        token: userConfirmationToken,
-        fullname: req.body.fullname,
-        created_at: new Date(),
-      }))
-      .then((insertedUser) => {
-        done(null, insertedUser[0]);
+      .then((hashedPass) => {
+        const newUser = {
+          username,
+          password: hashedPass,
+          token: userConfirmationToken,
+          fullname: req.body.fullname,
+          created_at: new Date(),
+        };
+        const promises = [newUser, storeUser(newUser)];
+        return Q.all(promises);
+      })
+      .then((results) => {
+        const [user, id] = results;
+        [user.id] = id;
+        done(null, user);
+        return null;
       })
       .catch((err) => {
         done(null, false, { message: err.message });
+        return null;
       })
       .done();
   }));

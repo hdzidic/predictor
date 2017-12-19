@@ -3,25 +3,21 @@ import { reduxForm } from 'redux-form'
 import { Button, Row, Col, Panel, Alert } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
-import {validateSignUp} from './validate';
+import {validateSignIn} from './validate';
 import FormControl from '../common/formControl';
 
 import './signUp.css';
 
-let SignUpForm = props => {
+let SignInForm = props => {
   const { handleSubmit, submitting, _error } = props;
   return <form onSubmit={handleSubmit}>
     <Row>
       <Col lg={6} lgOffset={3} md={8} mdOffset={2} sm={10} smOffset={1} xs={12}>
-        <Panel bsStyle='primary' header={'Create a Predictor account'}>
+        <Panel bsStyle='primary' header={'Sign in to Predictor'}>
           <br/>
           <FormControl name='username' type='email' label='Email'/>
           <br/>
-          <FormControl name='fullname' type='text' label='Full name'/>
-          <br/>
           <FormControl name='password' type='password' label='Password'/>
-          <br/>
-          <FormControl name='confirmPassword' type='password' label='Confirm Password'/>
           <br/>
           {_error && <Alert bsStyle='danger'>{_error}</Alert>}
         </Panel>
@@ -39,6 +35,6 @@ let SignUpForm = props => {
 }
 
 export default reduxForm({
-  form: 'signUp',
-  validate: validateSignUp
-})(SignUpForm);
+  form: 'signIn',
+  validate: validateSignIn
+})(SignInForm);

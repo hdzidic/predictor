@@ -41,7 +41,7 @@ export function app(instance = null) {
   const sess = {
     secret: config.sessionSecretKey,
     cookie: {
-      maxAge: 10000,
+      maxAge: 100000,
     },
     store,
     resave: false,

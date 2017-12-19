@@ -14,7 +14,8 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import FixtureList from './containers/fixtureList';
 import SignUp from './containers/signUp';
-import NavHeader from './components/navbar';
+import SignIn from './containers/signIn';
+import NavBar from './containers/navbar';
 import SignUpConfirmation from './components/signUpConfirmation';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -23,10 +24,11 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <BrowserRouter>
       <div>
-        <NavHeader/>
+        <NavBar/>
         <Switch>
           <Route path='/fixtures' component={FixtureList}/>
           <Route path='/signup' component={SignUp}/>
+          <Route path='/signin' component={SignIn}/>
           <Route path='/signupconfirmation' component={SignUpConfirmation}/>
           <Route path='/' component={App}/>
         </Switch>

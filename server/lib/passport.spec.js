@@ -94,19 +94,36 @@ describe('Passport Tests', function test() {
       .expect(400, done);
   });
 
-  it('signup should create new user', (done) => {
+  it('signup with weak password should throw error', (done) => {
     request(server.app())
       .post('/api/users/signup')
       .send({
-        username: 'paqash@gmail.com',
+        username: 'paqash2@gmail.com',
         password: 'pass1234',
         fullname: 'adminator',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
+      .expect(401, done);
+  });
+
+  it('signup should create new user', (done) => {
+    request(server.app())
+      .post('/api/users/signup')
+      .send({
+        username: 'paqash@gmail.com',
+        password: 'Pass1234#',
+        fullname: 'adminator',
+      })
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
       .expect(200)
-      .end((err) => {
+      .end((err, res) => {
         if (err) return done(err);
+        expect(res.body).to.include({
+          username: 'paqash@gmail.com',
+          fullname: 'adminator',
+        });
         return getUserByUsername('paqash@gmail.com')
           .then((user) => {
             expect(user[0]).to.be.an('Object');
@@ -122,7 +139,7 @@ describe('Passport Tests', function test() {
       .post('/api/users/signup')
       .send({
         username: 'paqash@gmail.com',
-        password: 'pass1234',
+        password: 'Pass1234#',
         fullname: 'adminator',
       })
       .set('Content-Type', 'application/json')
@@ -136,7 +153,7 @@ describe('Passport Tests', function test() {
       .post('/api/users/login')
       .send({
         username: 'paqash2@gmail.com',
-        password: 'wrongpass',
+        password: 'Pass1234#',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -149,7 +166,7 @@ describe('Passport Tests', function test() {
       .post('/api/users/login')
       .send({
         username: 'paqash@gmail.com',
-        password: 'wrongpass',
+        password: 'Pass12345#',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
@@ -162,7 +179,7 @@ describe('Passport Tests', function test() {
       .post('/api/users/login')
       .send({
         username: 'paqash@gmail.com',
-        password: 'pass1234',
+        password: 'Pass1234#',
       })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')

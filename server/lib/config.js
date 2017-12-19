@@ -31,6 +31,15 @@ const config = {
   root: serverRootPath,
   environment: process.env.NODE_ENV,
   sessionSecretKey: process.env.SECRET_KEY,
+  security: {
+    owasp: {
+      allowPassphrases: true,
+      maxLength: 128,
+      minLength: 6,
+      minPhraseLength: 20,
+      minOptionalTestsToPass: 3,
+    },
+  },
 };
 
 export default config;

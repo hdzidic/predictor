@@ -33,17 +33,51 @@ export function getFixtures() {
 export function signUp(history, values) {
   return function (dispatch) {
     return axios.post('/api/users/signup', values)
-    .then(() => {
-        dispatch(showSignupConfirmation());
+    .then((res) => {
+        dispatch(signUpConfirmation(res.data));
         history.push('/signupconfirmation');
       })
-    .catch(error => dispatch(showError(error)))
+    .catch(error => dispatch(showError((error.response && error.response.data && error.response.data.replace(/,/g, '\n')) || 'An error occurred!')));
   };
 }
 
-export function showSignupConfirmation() {
+export function signIn(history, values) {
+  return function (dispatch) {
+    return axios.post('/api/users/login', values)
+    .then((res) => {
+        dispatch(signInConfirmation(res.data));
+        history.push('/');
+      })
+    .catch(error => dispatch(showError((error.response && error.response.data) || 'An error occurred!')));
+  };
+}
+
+export function signUpConfirmation(user) {
+  localStorage.setItem('user_id', user.id);
+  localStorage.setItem('user_name', user.fullname);
   return {
-    type: 'SHOW_SIGNUP_CONFIRMATION',
-    payload: null
+    type: 'SIGNUP_CONFIRMATION',
+    payload: user
   }
+}
+
+export function signInConfirmation(user) {
+  localStorage.setItem('user_name', user.fullname);
+  localStorage.setItem('user_id', user.id);
+  return {
+    type: 'SIGNIN_CONFIRMATION',
+    payload: user
+  }
+}
+
+export function signOut(history) {
+  return function (dispatch) {
+    return axios.post('/api/users/signout')
+    .then((res) => {
+      localStorage.removeItem('user_id');
+      localStorage.removeItem('user_name');
+        history.push('/');
+      })
+    .catch();
+  };
 }
