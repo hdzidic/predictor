@@ -4,8 +4,9 @@ import { LinkContainer } from 'react-router-bootstrap';
 import './navbar.css';
 
 const NavHeader = (props) => {
-  const {user} = localStorage.getItem('user_id');
-  const {signOut} = props;
+  const user_name = localStorage.getItem('user_name');
+  const user = localStorage.getItem('user_name');
+  const {onSignOut} = props;
   return <Navbar inverse collapseOnSelect>
     <Navbar.Header>
       <LinkContainer to='/'>
@@ -38,11 +39,11 @@ const NavHeader = (props) => {
       {
         user && <div>
           <Nav pullRight>
-            <NavDropdown eventKey={1} title={`Welcome, ${user.fullname}`} id='navDropdown'>
+            <NavDropdown eventKey={1} title={`Welcome, ${user_name}`} id='navDropdown'>
               <LinkContainer to='/user'>
                 <MenuItem eventKey={1.1}>Edit Profile</MenuItem>
               </LinkContainer>
-              <MenuItem eventKey={1.2} onClick={signOut}>Sign out</MenuItem>
+              <MenuItem eventKey={1.2} onClick={onSignOut}>Sign out</MenuItem>
             </NavDropdown>
           </Nav>
           <Nav pullRight>

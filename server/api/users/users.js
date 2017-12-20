@@ -28,3 +28,8 @@ export function login(req, res, next) {
 export function signUp(req, res, next) {
   authenticate(req, res, next, 'signup');
 }
+
+export function signOut(req, res) {
+  req.logout();
+  res.redirect('/');
+}

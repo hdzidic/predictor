@@ -1,50 +1,57 @@
 import React, {Component} from 'react';
-import { Button, Row, Col, Panel } from 'react-bootstrap';
-
+import { Button, Row, Col, Panel, Alert } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {predictResult, getFixtures} from '../actions/index';
-import {Link} from 'react-router-dom';
-import './fixtureList.css';
 
-const HOME_WIN = 1, AWAY_WIN = 2, DRAW = 0;
+import {predictResult, getFixtures, savePredictions} from '../actions/index';
+import Fixture from '../components/fixture';
+import {results} from '../common/constants';
+
+import './fixtureList.css';
 
 class FixtureList extends Component {
   componentWillMount() {
     this.props.getFixtures();
   }
 
+  savePredictions = () => this.props.savePredictions(this.props.fixtures.matches);
+  submit = prediction => this.props.predictResult(prediction);
+
+  renderPanel() {
+    return <div>
+      {this.renderList()}
+      <br/>
+      {
+        this.props.fixtures.success && <Alert bsStyle='success'>Saved successfully</Alert>
+      }
+      {
+        this.props.fixtures.error && <Alert bsStyle='danger'>{this.props.fixtures.error}</Alert>
+      }
+    </div>
+  }
+
   renderList() {
-    return this.props.fixtures.map((fixture) => {
-      return <div key={fixture.homeTeamName}>
-        <Row>
-          <Col sm={7} smOffset={1} xs={6}>{`${fixture.homeTeamName} - ${fixture.awayTeamName}`}</Col>
-          <Col xs={2} sm={1}>
-            <Button
-              bsStyle={fixture.prediction === HOME_WIN ? 'primary' : 'default'}
-              onClick={() => this.props.predictResult({fixture, prediction: HOME_WIN})}>{HOME_WIN}</Button>
-          </Col>
-          <Col xs={2} sm={1}>
-            <Button
-              bsStyle={fixture.prediction === DRAW ? 'primary' : 'default'}
-              onClick={() => this.props.predictResult({fixture, prediction: DRAW})}>x</Button>
-          </Col>
-          <Col xs={2} sm={1}>
-            <Button
-              bsStyle={fixture.prediction === AWAY_WIN ? 'primary' : 'default'}
-              onClick={() => this.props.predictResult({fixture, prediction: AWAY_WIN})}>{AWAY_WIN}</Button>
-          </Col>
-        </Row>
-        <br/>
-      </div>;
-    })
+    return this.props.fixtures.matches && this.props.fixtures.matches.map((fixture) => {
+      //console.log(this.submit);
+      return <Fixture key={fixture.homeTeamName}
+        fixture={fixture}
+        predictHomeWin={() => this.submit({fixture, prediction: results.HOME_WIN})}
+        predictDraw={() => this.submit({fixture, prediction: results.DRAW})}
+        predictAwayWin={() => this.submit({fixture, prediction: results.AWAY_WIN})}
+        />;
+    });
   }
 
   render() {
+    if (!this.props.fixtures) {
+      return <div>Loading ...</div>;
+      // TODO: add loader
+    }
     return <div>
       <Row>
         <Col lg={6} lgOffset={3} md={8} mdOffset={2} sm={10} smOffset={1} xs={12}>
-          <Panel bsStyle='primary' header={'Premier League Fixtures'}>{this.renderList()}</Panel>
+          <Panel bsStyle='primary' header={'Premier League Fixtures'}>{this.renderPanel()}</Panel>
         </Col>
       </Row>
       <Row>
@@ -52,7 +59,7 @@ class FixtureList extends Component {
           <Link className='btn btn-danger btn-block' to='/'>Cancel</Link>
         </Col>
         <Col lg={2} lgOffset={2} md={3} mdOffset={2} sm={4} smOffset={2} xs={5} xsOffset={2}>
-          <Link className='btn btn-primary btn-block' to='/'>Save</Link>
+          <Button className='btn btn-primary btn-block' onClick={this.savePredictions} to='/'>Save</Button>
         </Col>
       </Row>
     </div>
@@ -64,7 +71,7 @@ function mapStateToProps({fixtures}) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({predictResult, getFixtures}, dispatch);
+  return bindActionCreators({predictResult, getFixtures, savePredictions}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FixtureList)

@@ -1,14 +1,25 @@
 export default function (state, action) {
-  if (action.type === 'SHOW_ERROR') {
+  if (action.type === 'LOGIN_ERROR') {
     return Object.assign({}, state, {
-      error: action.payload
+      login_error: action.payload,
+      signUp_error: false,
+      account: null
     });
   }
 
-  if (action.type === 'SIGNIN_CONFIRMATION' || action.type === 'SIGNUP_CONFIRMATION') {
+  if (action.type === 'SIGNUP_ERROR') {
     return Object.assign({}, state, {
-      error: false,
-      fullname: action.payload.fullname
+      login_error: false,
+      signUp_error: action.payload,
+      account: null
+    });
+  }
+
+  if (action.type === 'LOGIN_CONFIRMATION' || action.type === 'SIGNUP_CONFIRMATION') {
+    return Object.assign({}, state, {
+      login_error: false,
+      signUp_error: false,
+      account: action.payload
     });
   }
 

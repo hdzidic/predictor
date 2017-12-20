@@ -8,7 +8,7 @@ import {signIn} from '../actions/index';
 class SignInPage extends Component {
   submit = values => this.props.signIn(values);
   render() {
-    return <SignInForm onSubmit={this.submit} _error={this.props.user && this.props.user.error}/>
+    return <SignInForm onSubmit={this.submit} _error={this.props.user && this.props.user.login_error}/>
   }
 }
 

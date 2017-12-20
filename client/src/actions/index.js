@@ -14,9 +14,23 @@ export function displayFixtures(res) {
   }
 }
 
-export function showError(error) {
+export function loginError(error) {
   return {
-    type: 'SHOW_ERROR',
+    type: 'LOGIN_ERROR',
+    payload: error
+  }
+}
+
+export function signUpError(error) {
+  return {
+    type: 'SIGNUP_ERROR',
+    payload: error
+  }
+}
+
+export function fixtureError(error) {
+  return {
+    type: 'FIXTURE_ERROR',
     payload: error
   }
 }
@@ -25,8 +39,7 @@ export function getFixtures() {
   return function (dispatch) {
     return axios.get('/api/fixtures').then(
       res => dispatch(displayFixtures(res)),
-      error => dispatch(showError(error))
-    );
+      error => dispatch(fixtureError((error.response && error.response.data) || 'An error occurred!')));
   };
 }
 
@@ -37,7 +50,7 @@ export function signUp(history, values) {
         dispatch(signUpConfirmation(res.data));
         history.push('/signupconfirmation');
       })
-    .catch(error => dispatch(showError((error.response && error.response.data && error.response.data.replace(/,/g, '\n')) || 'An error occurred!')));
+    .catch(error => dispatch(signUpError((error.response && error.response.data && error.response.data.replace(/,/g, '\n')) || 'An error occurred!')));
   };
 }
 
@@ -48,7 +61,7 @@ export function signIn(history, values) {
         dispatch(signInConfirmation(res.data));
         history.push('/');
       })
-    .catch(error => dispatch(showError((error.response && error.response.data) || 'An error occurred!')));
+    .catch(error => dispatch(loginError((error.response && error.response.data) || 'An error occurred!')));
   };
 }
 
@@ -76,8 +89,29 @@ export function signOut(history) {
     .then((res) => {
       localStorage.removeItem('user_id');
       localStorage.removeItem('user_name');
-        history.push('/');
+      history.push('/');
       })
-    .catch();
+    .catch(() => {
+      localStorage.removeItem('user_id');
+      localStorage.removeItem('user_name');
+      history.push('/');
+    });
   };
+}
+
+export function savePredictions(matches) {
+  return function (dispatch) {
+    return axios.post('/api/fixtures/')
+    .then((res) => {
+      dispatch(savePredictionsConfirmation());
+    })
+    .catch(error => dispatch(fixtureError((error.response && error.response.data) || 'An error occurred!')));
+  };
+}
+
+export function savePredictionsConfirmation() {
+  return {
+    type: 'SAVE_PREDICTIONS_CONFIRMATION',
+    payload: null
+  }
 }
