@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '.env' });
 
 const serverRootPath = process.env.ROOTPATH || path.normalize(path.join(__dirname, '/..'));
-const appRootPath = process.env.ROOTPATH || path.normalize(path.join(__dirname, '/../../'));
 
 // Configure default runtime environment.
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -27,7 +26,7 @@ const config = {
   fixturesAPIUrl: process.env.FIXTURES_API_URL,
   fixturesAPIKey: process.env.FIXTURES_API_KEY,
 
-  static: process.env.CLIENT_STATIC || `${appRootPath}/client/build/`,
+  static: process.env.CLIENT_STATIC || `${serverRootPath}/client/build/`,
   root: serverRootPath,
   environment: process.env.NODE_ENV,
   sessionSecretKey: process.env.SECRET_KEY,
