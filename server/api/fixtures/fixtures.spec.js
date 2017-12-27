@@ -17,9 +17,9 @@ describe('API Tests', function test() {
       .expect(404, done);
   });
 
-  it('fixtures route should respond with 200', (done) => {
+  it('fixtures route should respond with 401', (done) => {
     request(server.app())
       .get('/api/fixtures')
-      .expect(200, done);
+      .expect(401, done);
   });
 });

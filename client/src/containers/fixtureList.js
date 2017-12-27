@@ -33,7 +33,6 @@ class FixtureList extends Component {
 
   renderList() {
     return this.props.fixtures.matches && this.props.fixtures.matches.map((fixture) => {
-      //console.log(this.submit);
       return <Fixture key={fixture.homeTeamName}
         fixture={fixture}
         predictHomeWin={() => this.submit({fixture, prediction: results.HOME_WIN})}
