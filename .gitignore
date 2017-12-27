@@ -17,6 +17,8 @@
 .env.production.local
 .netlify
 server/.env
+server/node_modules
+server/client/node_modules
 
 npm-debug.log*
 yarn-debug.log*
