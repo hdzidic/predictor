@@ -16,7 +16,9 @@
 .env.test.local
 .env.production.local
 .netlify
-server/.env
+server/*.env
+server/secret.yml
+server/config.yml
 server/node_modules
 server/client/node_modules
 

@@ -16,3 +16,6 @@ spec:
         image: gcr.io/predictor-188521/predictor-server:v45
         ports:
         - containerPort: 8099
+        envFrom:
+        - secretRef:
+          name: my-secret
