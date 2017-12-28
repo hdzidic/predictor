@@ -1,5 +1,5 @@
 node {
-  def project = 'predictor-197301'
+  def project = 'predictor-190317'
   def appName = 'predictor-server'
   def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
