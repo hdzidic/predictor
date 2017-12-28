@@ -6,15 +6,13 @@ node {
   checkout scm
 
   stage 'Build image'
-  sh("docker build -t ${imageTag} .")
-
-  stage 'Run Go tests'
-  sh("docker run ${imageTag} go test")
+  sh("docker build -t ${imageTag} server/.")
 
   stage 'Push image to registry'
   sh("gcloud docker -- push ${imageTag}")
 
   stage "Deploy Application"
 
-  sh("kubectl --namespace=production apply -f .")
+  sh("sed -i.bak 's#gcr.io/predictor-188521/predictor-server:v45#${imageTag}#' ./server/deployment.yaml")
+  sh("kubectl --namespace=production apply -f server/.")
 }
