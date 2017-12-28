@@ -14,5 +14,5 @@ node {
   stage "Deploy Application"
 
   sh("sed -i.bak 's#gcr.io/predictor-188521/predictor-server:v45#${imageTag}#' server/deployment.yml")
-  sh("kubectl --namespace=production apply -f server/")
+  sh("kubectl --namespace=production apply -f server/*.yml")
 }
