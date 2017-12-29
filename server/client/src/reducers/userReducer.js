@@ -3,7 +3,7 @@ export default function (state, action) {
     return Object.assign({}, state, {
       login_error: action.payload,
       signUp_error: false,
-      account: null
+      account: null,
     });
   }
 
@@ -11,7 +11,7 @@ export default function (state, action) {
     return Object.assign({}, state, {
       login_error: false,
       signUp_error: action.payload,
-      account: null
+      account: null,
     });
   }
 
@@ -19,7 +19,7 @@ export default function (state, action) {
     return Object.assign({}, state, {
       login_error: false,
       signUp_error: false,
-      account: action.payload
+      account: action.payload,
     });
   }
 
