@@ -1,8 +1,11 @@
 import path from 'path';
 import dotenv from 'dotenv';
 
+console.log('databasename=',process.env.DATABASE_NAME);
 // Load local Env configuration (ENV variables). To be used to configure Dev, Staging, Production
 dotenv.config({ path: '.env' });
+
+console.log('databasename2=',process.env.DATABASE_NAME);
 
 const serverRootPath = process.env.ROOTPATH || path.normalize(path.join(__dirname, '/..'));
 
